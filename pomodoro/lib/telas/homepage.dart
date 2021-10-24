@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:pomodoro/utils/constants.dart';
 import 'package:pomodoro/widgets/button.dart';
+import 'package:pomodoro/widgets/icon_button.dart';
 import 'package:pomodoro/widgets/progress_icons.dart';
 import 'package:pomodoro/model/status_pomodoro.dart';
 
@@ -22,10 +23,14 @@ const _btnTextStartNewSet = "START NEW SET";
 const _btnTextPause = "PAUSE";
 const _btnTextReset = "RESET";
 
+const _btnIconPlay = Icon(Icons.play_arrow);
+const _btnIconPause = Icon(Icons.pause_sharp);
+
 class _HomeState extends State<Home> {
   static AudioCache player = AudioCache();
   int remaningTime = pomodoroTotalTime;
   String mainBtnText = _btnTextStart;
+  Icon btnIcon = _btnIconPlay;
   // ignore: non_constant_identifier_names
   StatusPomodoro pomodoro_status = StatusPomodoro.pausedPomodoro;
   Timer _timer = new Timer(
@@ -50,36 +55,85 @@ class _HomeState extends State<Home> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
-      //appBar: AppBar(),
+      //backgroundColor: Colors.blueGrey,
+      appBar: AppBar(
+        title: Text('Pomodoro #$pomodoroNum'),
+        centerTitle: true,
+        elevation: 0.0,
+        // leading: IconButton(
+        //   onPressed: () => {},
+        //   icon: Icon(Icons.headset_off),
+        //   splashColor: Colors.blueGrey[900],
+        //   color: Colors.blueGrey,
+        // ),
+        // actions: [
+        //   IconButton(
+        //     onPressed: () => {},
+        //     icon: Icon(Icons.alarm_off),
+        //     splashColor: Colors.blueGrey[900],
+        //     color: Colors.blueGrey,
+        //   ),
+        // ],
+      ),
       body: SafeArea(
         child: Center(
           child: Column(
             children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Pomodoro number: $pomodoroNum",
-                style: TextStyle(
-                  fontSize: 32,
-                  color: Colors.white,
-                ),
-              ),
-              Text(
-                "Set: $setNum",
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.white,
-                ),
-              ),
+              // SizedBox(
+              //   height: 30,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Card(
+              //       color: Colors.blueGrey,
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Text(
+              //           "#cycle: $pomodoroNum",
+              //           style: TextStyle(
+              //             fontSize: 18,
+              //             color: Colors.white,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     Card(
+              //       color: Colors.blueGrey,
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Text(
+              //           "#serie: $setNum",
+              //           style: TextStyle(
+              //             fontSize: 18,
+              //             color: Colors.white,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        statusDescription[pomodoro_status].toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
                     CircularPercentIndicator(
+                      // backgroundColor: Color(0xff0B0C19),
+                      backgroundColor: Colors.blueGrey,
                       radius: 220.0,
-                      lineWidth: 25.0,
+                      lineWidth: 5.0,
                       percent: _getPomodoroPercentage(),
                       circularStrokeCap: CircularStrokeCap.round,
                       center: Text(
@@ -99,25 +153,24 @@ class _HomeState extends State<Home> {
                       done: pomodoroNum - (setNum * pomodoroPerSet),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 30,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        statusDescription[pomodoro_status].toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Button(
-                      onPress: _mainButtonPressed,
-                      text: mainBtnText,
-                    ),
-                    Button(
-                      onPress: _resetButtonPressed,
-                      text: _btnTextReset,
-                    ),
+                    // Button(
+                    //   onPress: _mainButtonPressed,
+                    //   text: mainBtnText,
+                    // ),
+
+                    IconButton(
+                      splashColor: Colors.blueGrey[900],
+                      color: Colors.blueGrey,
+                      onPressed: _mainButtonPressed,
+                      icon: btnIcon,
+                      iconSize: 60.0,
+                    )
+                    // Button(
+                    //   onPress: _resetButtonPressed,
+                    //   text: _btnTextReset,
+                    // ),
                   ],
                 ),
               ),
@@ -210,6 +263,7 @@ class _HomeState extends State<Home> {
                   setState(() {
                     remaningTime--;
                     mainBtnText = _btnTextPause;
+                    btnIcon = _btnIconPause;
                   })
                 }
               else
@@ -223,6 +277,7 @@ class _HomeState extends State<Home> {
                       setState(() {
                         remaningTime = longBreakTime;
                         mainBtnText = _btnTextStartLongBreak;
+                        btnIcon = _btnIconPlay;
                       }),
                     }
                   else
@@ -231,6 +286,7 @@ class _HomeState extends State<Home> {
                       setState(() {
                         remaningTime = shortBreakTime;
                         mainBtnText = _btnTextStartShortBreak;
+                        btnIcon = _btnIconPlay;
                       }),
                     }
                 }
@@ -241,6 +297,7 @@ class _HomeState extends State<Home> {
     pomodoro_status = StatusPomodoro.runningShortBreak;
     setState(() {
       mainBtnText = _btnTextPause;
+      btnIcon = _btnIconPause;
     });
     _cancelTimer();
     _timer = Timer.periodic(
@@ -260,6 +317,7 @@ class _HomeState extends State<Home> {
             pomodoro_status = StatusPomodoro.pausedPomodoro,
             setState(() {
               mainBtnText = _btnTextStart;
+              btnIcon = _btnIconPlay;
             }),
           },
       },
@@ -270,6 +328,7 @@ class _HomeState extends State<Home> {
     pomodoro_status = StatusPomodoro.runningLongBreak;
     setState(() {
       mainBtnText = _btnTextPause;
+      btnIcon = _btnIconPause;
     });
     _cancelTimer();
     _timer = Timer.periodic(
@@ -289,6 +348,7 @@ class _HomeState extends State<Home> {
             pomodoro_status = StatusPomodoro.setFinished,
             setState(() {
               mainBtnText = _btnTextStartNewSet;
+              btnIcon = _btnIconPlay;
             }),
           },
       },
@@ -300,6 +360,7 @@ class _HomeState extends State<Home> {
     _cancelTimer();
     setState(() {
       mainBtnText = _btnTextResumePomodoro;
+      btnIcon = _btnIconPlay;
     });
   }
 
@@ -314,6 +375,7 @@ class _HomeState extends State<Home> {
     pomodoro_status = StatusPomodoro.pausedPomodoro;
     setState(() {
       mainBtnText = _btnTextStart;
+      btnIcon = _btnIconPlay;
       remaningTime = pomodoroTotalTime;
     });
   }
@@ -332,6 +394,7 @@ class _HomeState extends State<Home> {
     _cancelTimer();
     setState(() {
       mainBtnText = _btnTestResumeBreak;
+      btnIcon = _btnIconPlay;
     });
   }
 

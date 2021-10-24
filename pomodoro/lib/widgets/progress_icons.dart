@@ -8,15 +8,15 @@ class ProgressIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconSize = 50.0;
+    final iconSize = 12.0;
     final doneIcon = Icon(
-      Icons.beenhere,
-      color: Colors.orange,
+      Icons.brightness_1_rounded,
+      color: Colors.purple[300],
       size: iconSize,
     );
     final notDoneIcon = Icon(
-      Icons.beenhere_outlined,
-      color: Colors.orange,
+      Icons.brightness_1_rounded,
+      color: Colors.blueGrey,
       size: iconSize,
     );
 

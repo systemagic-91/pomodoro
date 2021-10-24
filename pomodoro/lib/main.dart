@@ -13,7 +13,10 @@ class MyApp extends StatelessWidget {
       title: 'Pomodoro',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Color(0xFF2A2B4D),
+        primaryColor: Color(0xFF2A2B4D),
+        // primarySwatch: Colors.yellow,
       ),
       home: Home(),
     );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pomodoro/model/status_pomodoro.dart';
 
-const pomodoroTotalTime = 50 * 60;
-const shortBreakTime = 10 * 60;
-const longBreakTime = 25 * 60;
+const pomodoroTotalTime = 25 * 60;
+const shortBreakTime = 5 * 60;
+const longBreakTime = 10 * 60;
 const pomodoroPerSet = 4;
 
 const Map<StatusPomodoro, String> statusDescription = {
@@ -17,11 +17,11 @@ const Map<StatusPomodoro, String> statusDescription = {
 };
 
 const Map<StatusPomodoro, MaterialColor> statusColor = {
-  StatusPomodoro.runningPomodoro: Colors.green,
-  StatusPomodoro.pausedPomodoro: Colors.orange,
-  StatusPomodoro.runningShortBreak: Colors.red,
-  StatusPomodoro.pauseShortBreak: Colors.orange,
-  StatusPomodoro.runningLongBreak: Colors.red,
-  StatusPomodoro.pauseLongBreak: Colors.orange,
+  StatusPomodoro.runningPomodoro: Colors.purple,
+  StatusPomodoro.pausedPomodoro: Colors.red,
+  StatusPomodoro.runningShortBreak: Colors.yellow,
+  StatusPomodoro.pauseShortBreak: Colors.red,
+  StatusPomodoro.runningLongBreak: Colors.yellow,
+  StatusPomodoro.pauseLongBreak: Colors.red,
   StatusPomodoro.setFinished: Colors.orange
 };

@@ -21,8 +21,11 @@ class Button extends StatelessWidget {
             text,
             style: TextStyle(fontSize: 15),
           ),
-          style: ElevatedButton.styleFrom(
-            fixedSize: Size(200, 40),
+          // style: ElevatedButton.styleFrom(
+          //   fixedSize: Size(200, 40),
+          // ),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.blueGrey),
           ),
         ),
       ),
